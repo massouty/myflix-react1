@@ -8,7 +8,6 @@ class MovieCard extends React.Component {
     _id: 1,
     Title: 'Silence of the Lambs',
     Description: 'A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.',
-      
     ImagePath: 'https://www.imdb.com/title/tt0102926/mediaviewer/rm803658241/?ref_=tt_md_3',
 
   },
@@ -23,7 +22,7 @@ class MovieCard extends React.Component {
     _id: 3,
     Title: 'Coco',
     Description: 'The story follows a 12-years-old boy named Miguel who is accidentally transported to the Land of Dead.',
-    ImagePath: 'https://www.imdb.com/title/tt2380307/mediaviewer/rm585455872/?ref_=tt_ov_i',
+    ImagePath: "https://www.imdb.com/title/tt2380307/mediaviewer/rm585455872/?ref_=tt_ov_i",
 
   },
       ]
