@@ -14,7 +14,7 @@ class MainView extends React.Component {
         };
     }
      componentDidMount() {
-    axios.get('https://juanroldan1989-moviequotes-v1.p.rapidapi.com/api/v1/quotes')
+    axios.get('https://moviehut-random-movie.p.rapidapi.com/api/movies')
       .then(response => {
         this.setState({
           movies: response.data
