@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './movie-view.scss';
+
 class MovieView extends React.Component {
 
   render() {

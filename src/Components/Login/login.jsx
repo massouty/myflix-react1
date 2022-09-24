@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import './login.scss';
+
  function Login (props) {
   const [ username, setUsername ] = useState('');
   const [ password, setPassword ] = useState('');
