@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import React from "react";
-import axios from "axios";
 import MovieView from "../Movie-view/movie-view";
 import MovieCard from "../Moviecard-view/moviecard-view";
 import Login from "../Login/login";
@@ -16,15 +15,24 @@ class MainView extends React.Component {
         };
     }
      componentDidMount() {
-    axios.get('https://moviehut-random-movie.p.rapidapi.com/api/movies')
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    const axios = require("axios");
+
+const options = {
+  method: 'GET',
+  url: 'https://moviehut-random-movie.p.rapidapi.com/api/movies',
+  params: {limit: '8', page: '5', select: 'name'},
+  headers: {
+    'X-RapidAPI-Key': 'f56dac72afmsh9169bd8bc5415a6p121da0jsn0ed46b2f501f',
+    'X-RapidAPI-Host': 'moviehut-random-movie.p.rapidapi.com'
+  }
+}
+
+axios.request(options).then(function (response) {
+	console.log(response.data);
+}).catch(function (error) {
+	console.error(error);
+});
+
     }
     setSelectedMovie = (movie) => {
         this.setState((prev) => ({
