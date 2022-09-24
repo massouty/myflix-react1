@@ -2,6 +2,8 @@
 import React from "react";
 import MovieView from "../Movie-view/movie-view";
 import MovieCard from "../Moviecard-view/moviecard-view";
+import Login from "../Login/login";
+import Register from '../Register/register';
 
 class MainView extends React.Component {
     constructor() {
@@ -31,17 +33,17 @@ class MainView extends React.Component {
 
       onLoggedIn(user) {this.setState({user});}
 
-onRegistration(registered) {
-    this.setState({registered});
+onRegistration(register) {
+    this.setState({register});
     };
 
 
     render() {
-        const { movies, selectedMovie, user, registered } = this.state;
+        const { movies, selectedMovie, user, register } = this.state;
 
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+    if (!user) return <Login onLoggedIn={user => this.onLoggedIn(user)} />;
 
-    if (!registered) return <RegistrationView onRegistration={(register) => this.onRegistration(register)} />;
+    if (!register) return <Register onRegistration={(register) => this.onRegistration(register)} />;
 
         if (selectedMovie) {
             return (
