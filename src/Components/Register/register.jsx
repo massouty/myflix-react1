@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {Form, Button, Card, CardGroup, Container, Col, Row, Navbar, Nav } from 'react-bootstrap';
+import './register.scss';
 
-import './registration-view.scss';
-import axios from 'axios';
 
-export function RegistrationView(props) {
+ function Register (props) {
     const [ username, setUsername ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ email, setEmail ] = useState('');
@@ -40,3 +38,9 @@ export function RegistrationView(props) {
     </form>
   );
 }
+
+Register.propTypes = {
+    onRegistration: PropTypes.func.isRequired,
+};
+
+export default Register;
