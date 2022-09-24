@@ -1,9 +1,11 @@
 /* eslint-disable no-undef */
 import React from "react";
+import axios from "axios";
 import MovieView from "../Movie-view/movie-view";
 import MovieCard from "../Moviecard-view/moviecard-view";
 import Login from "../Login/login";
 import Register from '../Register/register';
+
 
 class MainView extends React.Component {
     constructor() {
