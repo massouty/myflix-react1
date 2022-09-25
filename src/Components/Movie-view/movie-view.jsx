@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row } from 'react-bootstrap';
+import Row  from 'react-bootstrap/Row';
 
 import './movie-view.scss';
 
@@ -12,7 +12,7 @@ class MovieView extends React.Component {
       <div className="movie-view">
         <Row>
         <div className="movie-poster">
-          <img src={movie.ImagePath} alt=""/>
+          <img src={movie.ImagePath} alt="movie-poster"/>
         </div>
         </Row>
         <Row>
@@ -27,7 +27,7 @@ class MovieView extends React.Component {
           <span className="value">{movie.Description}</span>
         </div>
         </Row>
-        
+
         <button onClick={() => { onBackClick(null); }}>Back</button>
 
       </div>
