@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
 import React from "react";
+import axios from "axios";
 import MovieView from "../Movie-view/movie-view";
 import MovieCard from "../Moviecard-view/moviecard-view";
-import Login from "../Login/login";
-import Register from '../Register/register';
+import Header from "../Header";
+import Footer from '../Footer';
 
 
 class MainView extends React.Component {
@@ -15,24 +16,15 @@ class MainView extends React.Component {
         };
     }
      componentDidMount() {
-    const axios = require("axios");
-
-const options = {
-  method: 'GET',
-  url: 'https://moviehut-random-movie.p.rapidapi.com/api/movies',
-  params: {limit: '8', page: '5', select: 'name'},
-  headers: {
-    'X-RapidAPI-Key': 'f56dac72afmsh9169bd8bc5415a6p121da0jsn0ed46b2f501f',
-    'X-RapidAPI-Host': 'moviehut-random-movie.p.rapidapi.com'
-  }
-}
-
-axios.request(options).then(function (response) {
-	console.log(response.data);
-}).catch(function (error) {
-	console.error(error);
-});
-
+    axios.get('https://moviehut-random-movie.p.rapidapi.com/api/movies')
+      .then(response => {
+        this.setState({
+          movies: response.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
     }
     setSelectedMovie = (movie) => {
         this.setState((prev) => ({
@@ -49,14 +41,14 @@ onRegistration(register) {
 
 
     render() {
-        const { movies, selectedMovie, user, register } = this.state;
-
-    if (!user) return <Login onLoggedIn={user => this.onLoggedIn(user)} />;
-
-    if (!register) return <Register onRegistration={(register) => this.onRegistration(register)} />;
-
-        if (selectedMovie) {
-            return (
+        const { movies, selectedMovie } = this.state;
+        return (
+       <>
+           <div>
+            <Header/>
+          </div>
+          <div>
+            if (selectedMovie) {
                 <MovieView
                     movie={selectedMovie}
                     onBackClick={() => {
@@ -66,9 +58,8 @@ onRegistration(register) {
                         }));
                     }}
                 />
-            );
         } else {
-            return movies.length === 0 ? (
+             movies.length === 0 ? (
                 <div className="main-view">The list is empty!</div>
             ) : (
                 <div className="main-view">
@@ -82,9 +73,16 @@ onRegistration(register) {
                         />
                     ))}
                 </div>
-            );
-        }
-    }
+            )
+         }
+         </div>
+         <div>
+        <Footer/>
+        </div>
+</>
+)
+}
+
 }
 
 export default MainView;
