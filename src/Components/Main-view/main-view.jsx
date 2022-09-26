@@ -1,85 +1,159 @@
 /* eslint-disable no-undef */
 import React from "react";
 import axios from "axios";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import MovieView from "../Movie-view/movie-view";
-import MovieCard from "../Moviecard-view/moviecard-view";
 
-import Silence from '../image/silence.jpg';
-import Lord from '../image/lord.jpg';
-import Coco from'../image/coco.jpg';
+import Login from  "../Login/login";
+import Register from "../Register/register";
+import Director from '../Director/director';
+import Genre from '../Genre/genre';
+import ProfileView from '../Profile-view/profile-view';
+import Header from '../Header';
+import MoviesList from "../Movies-list";
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+import './main-view.scss';
 
 
+export class MainView extends React.Component {
 
-class  MainView extends React.Component {
-      constructor() {
-        super();
-        this.state = {
-            movies: [{
-                    _id: 1,
-                    Title: "Silence of the Lambs",
-                    Description:
-                        "A young FBI cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer.",
-
-                    ImagePath:Silence,
-                },
-                {
-                    _id: 2,
-                    Title: "Lord of the Ring",
-                    Description:
-                        " A  fellowship of hobbits , elves,dwarfs and men is formed to destroy the ring by casting it into the volcanic fire of the crack of doom .",
-                    ImagePath:Lord
-                },
-                {
-                    _id: 3,
-                    Title: "Coco",
-                    Description:
-                        "The story follows a 12-years-old boy named Miguel who is accidentally transported to the Land of Dead.",
-                    ImagePath:Coco
-                }, ],
-            selectedMovie: null,
-        };
+  constructor(){
+    super();
+    this.state = {
+      isRegistered: true,
+      user: null,
+      visable: false
     }
-     componentDidMount() {
-    axios.get('https://appformovies.herokuapp.com/movies')
-      .then(response => {
-        this.setState({
-          movies: response.data
-        });
-      })
-      .catch(error => {
-        console.log(error);
+  }
+  
+  componentDidMount() {
+    let accessToken = localStorage.getItem('token');
+    if (accessToken !== null) {
+      this.setState({
+        user: localStorage.getItem('user')
       });
+      this.getMovies(accessToken);
     }
-    setSelectedMovie = (movie) => {
-        this.setState((prev) => ({
-            ...prev,
-            selectedMovie: movie,
-        }));
-    }
+  }
 
-      onLoggedIn(user) {this.setState({user});}
+  getMovies() {
+    axios.get('https://moviehut-random-movie.p.rapidapi.com/api/movies', {
 
-onRegistration(register) {
-    this.setState({register});
-    };
+    params: {limit: '8', page: '5', select: 'name'},
+  headers: {
+    'X-RapidAPI-Key': 'f5 6dac72afmsh9169bd8bc5415a6p121da0jsn0ed46b2f501f',
+    'X-RapidAPI-Host': 'moviehut-random-movie.p.rapidapi.com'
+  }
+    })
+    .then(response => {
+      this.props.setMovies(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
- render() {
-        const { movies, selectedMovie } = this.state;
+  onLoggedIn(authData) {
+    console.log(authData);
+    this.setState({
+      user: authData.user.Username
+    });
+  
+    localStorage.setItem('token', authData.token);
+    localStorage.setItem('user', authData.user.Username);
+    this.getMovies(authData.token);
+  }
 
-        if (selectedMovie) {return (<MovieView movie={selectedMovie} onBackClick={() => 
-            {this.setState((prev) => ({...prev,selectedMovie: null, }));
-                    }}/>
-            );
-        } else {return movies.length === 0 ? (
-                <div className="main-view">The list is empty!</div>) : 
-                (<div className="main-view"> {movies.map((movie) => (<MovieCard key={movie._id} movie={movie} onMovieClick={(movie) => 
-                {this.setSelectedMovie(movie);}}/>
-                    ))}
-                </div>
-            );
-        }
-    }
+  onLoggedOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null
+    });
+  }
+
+  onRegister() {
+    this.setState({
+      isRegistered: false
+    });
+  }
+
+  render() {
+
+    let { movies } = this.props;
+    let { user } = this.state;
+
+    return (
+      <Router>
+        <Header user={user} /> 
+        <Row className="main-view justify-content-md-center">
+          <Route exact path="/" render={() => {
+              if (!user) return <Col>
+                <Login onLoggedIn={user => this.onLoggedIn(user)} />
+              </Col>
+              if (movies.length === 0) return <div className="main-view" />;
+              return <MoviesList movies={movies}/>;
+         }} />
+          <Route path="/register" render={() => {
+            // eslint-disable-next-line react/jsx-no-undef
+            if (user) return < Redirect to ="/" />
+            return <Col>
+              <Register/>
+            </Col>
+          }} />
+    <Route path="/movies/:id" render={({ match, history }) => {
+       if (!user) return <Col>
+       <Login onLoggedIn={user => this.onLoggedIn(user)} />
+     </Col>
+     if (movies.length === 0) return <div className="main-view" />;
+     return <Col md={8}>
+        <MovieView movie={movies.find(m => m._id === match.params.id)} onBackClick={() => history.goBack()} />
+      </Col>
+    }} />
+    <Route path="/directors/:name" render={({ match, history}) => {
+      if (!user) return <Col>
+      <Login onLoggedIn={user => this.onLoggedIn(user)} />
+    </Col>
+    if (movies.length === 0) return <div className="main-view" />;
+    return <Col md={8}>
+      <Director director={movies.find(m => m.Director.Name === match.params.name )} onBackClick={() => history.goBack()}/>
+      </Col>
+    }} />
+    <Route path="/genres/:name" render={({ match, history}) => {
+      if (!user) return <Col>
+      <Login onLoggedIn={user => this.onLoggedIn(user)} />
+    </Col>
+    if (movies.length === 0) return <div className="main-view" />;
+    return <Col md={8}>
+      <Genre genre={movies.find(m => m.Genre.Name === match.params.name )} onBackClick={() => history.goBack()}/>
+      </Col>
+    }} />
+    <Route path={`/users/${user}`} render={({ history}) => {
+       if (!user) return <Col>
+       <Login onLoggedIn={user => this.onLoggedIn(user)} />
+     </Col>
+     if (movies.length === 0) return <div className="main-view" />;
+     return <Col md={8}>
+      <ProfileView movies={movies} user={user} onBackClick={() => history.goBack()} />
+      </Col>
+    }} />
+  </Row>
+</Router>
+     
+    );
+  }
 }
 
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
 
-export default MainView;
+export default connect (mapStateToProps, { setMovies } )(MainView);
+
+
+
+
+
