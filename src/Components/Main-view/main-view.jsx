@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
 import axios from "axios";
+import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import MovieView from "../Movie-view/movie-view";
@@ -151,7 +152,7 @@ let mapStateToProps = state => {
   return { movies: state.movies }
 }
 
-export default connect (mapStateToProps, { setMovies } )(MainView);
+export default connect (mapStateToProps )(MainView);
 
 
 

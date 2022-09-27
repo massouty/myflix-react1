@@ -2,8 +2,8 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import {connect} from 'react-redux';
 
-import VisibilityFilterInput from '../visibility-filter-input/visibility-filter-input';
-import MovieCard  from '../Moviecard-view/moviecard-view';
+import VisibilityFilterInput from './visibility-filter-input/visibility-filter-input';
+import MovieCard  from './Moviecard-view/moviecard-view';
 
 const mapStateToProps = state => {
   const { visibilityFilter } = state;
