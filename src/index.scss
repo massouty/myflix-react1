@@ -1,14 +1,59 @@
-html {
-    background-color: #051622;
-    font-size: 1.3rem;
+body {
+  font-family: 'Barlow', sans-serif !important;
+  font-size: 1.2rem !important;
+  background: linear-gradient(
+    90deg,
+    rgb(231, 214, 139) 0%,
+    rgb(248, 200, 128) 15%,
+    rgb(233, 169, 50) 85%,
+    rgb(138, 97, 9) 100%
+  );
+  min-height: 100vh;
 }
 
-.app-container {
-    background-color: #051622;
-    color: white;
+.my-flix {
+  font-size: 2em;
 }
 
-.btn.btn-primary {
-    background-color: #1BA098;
-    
+.movie-view {
+  margin: 1em;
+  padding: 1em;
+  background-color: rgb(240, 226, 188);
+  width: 350px;
+  border-radius: 3px;
+}
+
+.fw-light {
+  font-weight: 300;
+}
+
+.fw-bold {
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+
+.validation-message {
+  color: red;
+  font-weight: 500;
+  padding-left: 5px;
+  font-style: italic;
+}
+
+.validation-message::before {
+  content: '↪ ';
+}
+
+.view-background {
+  background: linear-gradient(
+    90deg,
+    rgb(170, 170, 170) 0%,
+    rgb(220, 220, 220) 15%,
+    rgb(220, 220, 220) 85%,
+    rgb(170, 170, 170) 100%
+  );
+  min-height: 100vh;
 }
