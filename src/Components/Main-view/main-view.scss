@@ -1,0 +1,34 @@
+.main-view-width {
+  width: 100vw;
+  margin: auto;
+}
+
+.specs {
+  font-size: 1.6rem;
+  font-weight: 200;
+  color: var(--white);
+}
+
+@media (min-width: 768px) {
+  .main-view-width {
+    width: 82vw;
+  }
+}
+
+@media (min-width: 1400px) {
+  .main-view-width {
+    width: 70vw;
+  }
+}
+
+@media (min-width: 1600px) {
+  .main-view-width {
+    width: 62vw;
+  }
+}
+
+@media (min-width: 1900px) {
+  .main-view-width {
+    width: 55vw;
+  }
+}
