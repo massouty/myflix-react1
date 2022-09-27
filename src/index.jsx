@@ -3,12 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.scss';
 import MainView from './Components/Main-view/main-view';
 import Container from 'react-bootstrap/Container';
+import Header from './Header';
+import Footer  from './footer';
 
 class MyFlixApplication extends React.Component {
   render() {
     return (
     <Container>
+        <Header/>
       <MainView />
+      <Footer/>
     </Container>
     );
   }
